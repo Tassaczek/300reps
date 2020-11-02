@@ -16,15 +16,3 @@ form.addEventListener('submit', (event: Event) => {
     list.render(exercise, uid);
     form.reset();
 })
-
-// let exerciseOne = new Exercise('Dips', 50);
-// console.log(exerciseOne)
-//
-// let exerciseList = document.querySelector('#exercises-list')!;
-
-
-function donothing () {
-    console.log('sadasd');
-}
-
-console.log(typeof donothing());

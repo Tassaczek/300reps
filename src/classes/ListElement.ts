@@ -54,12 +54,6 @@ export class ListElement {
 
         firstButtonsGroup.appendChild(addOneButton);
 
-
-        function addReps(e: Event, add: number) {
-
-        }
-
-
         const addFiveButton = document.createElement('button');
         addFiveButton.classList.add("btn", "btn-secondary");
         addFiveButton.type = 'button';
