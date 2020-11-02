@@ -46,7 +46,7 @@ export class ListElement {
         addOneButton.type = 'button';
         addOneButton.innerText = '+1';
         addOneButton.setAttribute('data-id', uid.toString())
-        addOneButton.addEventListener('click', function () {
+        addOneButton.addEventListener('click', function (e:Event) {
             exercise.repsDone = exercise.repsDone + 1;
             let h3ToChange = document.querySelector(`#counter-${uid}`) as HTMLHRElement;
             h3ToChange.innerText = exercise.repsDone.toString();
