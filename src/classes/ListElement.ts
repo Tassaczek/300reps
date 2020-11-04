@@ -47,17 +47,20 @@ export class ListElement {
             return buttonGroup;
         }
 
-        function createButton(innerText: string, uid: number) {
+        function createButton(numberOfReps: number) {
             let button = document.createElement('button');
             button.classList.add("btn", "btn-secondary");
             button.type = 'button';
-            button.innerText = innerText;
+            button.innerText = numberOfReps >= 0 ? `+${numberOfReps.toString()}` : numberOfReps.toString();
             button.setAttribute('data-id', uid.toString())
+            button.addEventListener('click', function () {
+                addReps(numberOfReps);
+            });
             return button;
         }
 
         // function to change done reps
-        function addReps(exercise: Exercise, uid: number, add: number) {
+        function addReps(add: number) {
             exercise.repsDone = exercise.repsDone + add;
             let h3ToChange = document.querySelector(`#counter-${uid}`) as HTMLHRElement;
             h3ToChange.innerText = exercise.repsDone.toString();
@@ -67,31 +70,16 @@ export class ListElement {
         const firstButtonsGroup = createButtonGroup('First group');
         buttonCol.appendChild(firstButtonsGroup);
 
-        const addOneButton = createButton('+1', uid);
-        addOneButton.addEventListener('click', function () {
-            addReps(exercise, uid, 1);
-        });
+        const addOneButton = createButton(1);
         firstButtonsGroup.appendChild(addOneButton);
 
-        const addFiveButton = createButton('+5', uid);
-        addFiveButton.addEventListener('click', function () {
-            addReps(exercise, uid, 5);
-        });
-
+        const addFiveButton = createButton(5);
         firstButtonsGroup.appendChild(addFiveButton);
 
-        const addTenButton = createButton('+10', uid);
-        addTenButton.addEventListener('click', function () {
-            addReps(exercise, uid, 10);
-        });
-
+        const addTenButton = createButton(10);
         firstButtonsGroup.appendChild(addTenButton);
 
-        const addTwentyButton = createButton('+20', uid);
-        addTwentyButton.addEventListener('click', function () {
-            addReps(exercise, uid, 20);
-        });
-
+        const addTwentyButton = createButton(20);
         firstButtonsGroup.appendChild(addTwentyButton);
 
         // second button group
@@ -99,10 +87,7 @@ export class ListElement {
         const secondButtonsGroup = createButtonGroup('Second group');
         buttonCol.appendChild(secondButtonsGroup);
 
-        const subtractOneButton = createButton('-1', uid);
-        subtractOneButton.addEventListener('click', function () {
-            addReps(exercise, uid, -1);
-        });
+        const subtractOneButton = createButton( -1);
         secondButtonsGroup.appendChild(subtractOneButton);
 
         // reps column

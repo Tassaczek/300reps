@@ -22,7 +22,7 @@ You do not need to do them in order or in fixed sets. You can do even one rep an
 - [ ] Block possibility of adding more reps than chosen total for exercise
 - [ ] Blocking the possibility to go below a zero with reps count
 - [ ] Moving CSS to separate file
-- [ ] Adding the third column for buttons
+- [x] Adding the third column for buttons
 - [ ] Add possibility to remove exercise
 - [ ] Add the possibility to add standard sets of exercises. 
 - [ ] Add total value for all exercises. 
