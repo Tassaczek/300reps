@@ -17,7 +17,7 @@ export class ListElement {
         container.appendChild(containerCol);
         containerCol.appendChild(exerciseRow);
 
-        // First Column with a name
+        // First Column in row with a exercise name
         const nameCol = document.createElement('div');
         nameCol.classList.add("col", "d-flex", "align-items-center");
         const nameH3 = document.createElement('h3');
@@ -26,97 +26,86 @@ export class ListElement {
         nameCol.appendChild(nameH3);
         exerciseRow.appendChild(nameCol);
 
-        // Second column with a buttons and reps
+        // Second column in row with  buttons
+        const buttonCol = document.createElement('div');
+        buttonCol.classList.add("col-6", "d-flex", "justify-content-center", "align-items-center");
+        exerciseRow.appendChild(buttonCol);
+
+        // Third column in row with reps
 
         const repsCol = document.createElement('div');
         repsCol.classList.add("col", "d-flex", "justify-content-end", "align-items-center");
         exerciseRow.appendChild(repsCol);
 
-        //first button group
+        //help function tu create button and button group div.
 
-        const firstButtonsGroup = document.createElement('div');
-        firstButtonsGroup.classList.add("btn-group", "btn-group-lg", "mr-2");
-        firstButtonsGroup.setAttribute('aria-label', 'First group');
-        firstButtonsGroup.setAttribute('role', 'group');
+        function createButtonGroup(ariaLabel: string) {
+            let buttonGroup = document.createElement('div');
+            buttonGroup.classList.add("btn-group", "btn-group-lg", "mr-2");
+            buttonGroup.setAttribute('aria-label', ariaLabel);
+            buttonGroup.setAttribute('role', 'group');
+            return buttonGroup;
+        }
 
-        repsCol.appendChild(firstButtonsGroup);
+        function createButton(innerText: string, uid: number) {
+            let button = document.createElement('button');
+            button.classList.add("btn", "btn-secondary");
+            button.type = 'button';
+            button.innerText = innerText;
+            button.setAttribute('data-id', uid.toString())
+            return button;
+        }
 
-        const addOneButton = document.createElement('button');
-        addOneButton.classList.add("btn", "btn-secondary");
-        addOneButton.type = 'button';
-        addOneButton.innerText = '+1';
-        addOneButton.setAttribute('data-id', uid.toString())
-        addOneButton.addEventListener('click', function (e:Event) {
-            exercise.repsDone = exercise.repsDone + 1;
+        // function to change done reps
+        function addReps(exercise: Exercise, uid: number, add: number) {
+            exercise.repsDone = exercise.repsDone + add;
             let h3ToChange = document.querySelector(`#counter-${uid}`) as HTMLHRElement;
             h3ToChange.innerText = exercise.repsDone.toString();
-        });
+        }
 
+        //create first button group
+        const firstButtonsGroup = createButtonGroup('First group');
+        buttonCol.appendChild(firstButtonsGroup);
+
+        const addOneButton = createButton('+1', uid);
+        addOneButton.addEventListener('click', function () {
+            addReps(exercise, uid, 1);
+        });
         firstButtonsGroup.appendChild(addOneButton);
 
-        const addFiveButton = document.createElement('button');
-        addFiveButton.classList.add("btn", "btn-secondary");
-        addFiveButton.type = 'button';
-        addFiveButton.innerText = '+5';
-        addFiveButton.setAttribute('data-id', uid.toString())
+        const addFiveButton = createButton('+5', uid);
         addFiveButton.addEventListener('click', function () {
-            exercise.repsDone = exercise.repsDone + 5;
-            let h3ToChange = document.querySelector(`#counter-${uid}`) as HTMLHRElement;
-            h3ToChange.innerText = exercise.repsDone.toString();
+            addReps(exercise, uid, 5);
         });
 
         firstButtonsGroup.appendChild(addFiveButton);
 
-        const addTenButton = document.createElement('button');
-        addTenButton.classList.add("btn", "btn-secondary");
-        addTenButton.type = 'button';
-        addTenButton.innerText = '+10';
-        addTenButton.setAttribute('data-id', uid.toString())
+        const addTenButton = createButton('+10', uid);
         addTenButton.addEventListener('click', function () {
-            exercise.repsDone = exercise.repsDone + 10;
-            let h3ToChange = document.querySelector(`#counter-${uid}`) as HTMLHRElement;
-            h3ToChange.innerText = exercise.repsDone.toString();
+            addReps(exercise, uid, 10);
         });
-
 
         firstButtonsGroup.appendChild(addTenButton);
 
-        const addTwentyButton = document.createElement('button');
-        addTwentyButton.classList.add("btn", "btn-secondary");
-        addTwentyButton.type = 'button';
-        addTwentyButton.innerText = '+20'
-        addTwentyButton.setAttribute('data-id', uid.toString())
+        const addTwentyButton = createButton('+20', uid);
         addTwentyButton.addEventListener('click', function () {
-            exercise.repsDone = exercise.repsDone + 20;
-            let h3ToChange = document.querySelector(`#counter-${uid}`) as HTMLHRElement;
-            h3ToChange.innerText = exercise.repsDone.toString();
+            addReps(exercise, uid, 20);
         });
+
         firstButtonsGroup.appendChild(addTwentyButton);
 
         // second button group
 
-        const secondButtonsGroup = document.createElement('div');
-        secondButtonsGroup.classList.add("btn-group", "btn-group-lg", "mr-2");
-        secondButtonsGroup.setAttribute('aria-label', 'Second group');
-        secondButtonsGroup.setAttribute('role', 'group');
+        const secondButtonsGroup = createButtonGroup('Second group');
+        buttonCol.appendChild(secondButtonsGroup);
 
-        repsCol.appendChild(secondButtonsGroup);
-
-        const subtractOneButton = document.createElement('button');
-        subtractOneButton.classList.add("btn", "btn-secondary");
-        subtractOneButton.type = 'button';
-        subtractOneButton.innerText = '-1'
-        subtractOneButton.setAttribute('data-id', uid.toString())
+        const subtractOneButton = createButton('-1', uid);
         subtractOneButton.addEventListener('click', function () {
-            exercise.repsDone = exercise.repsDone - 1;
-            let h3ToChange = document.querySelector(`#counter-${uid}`) as HTMLHRElement;
-            h3ToChange.innerText = exercise.repsDone.toString();
+            addReps(exercise, uid, -1);
         });
         secondButtonsGroup.appendChild(subtractOneButton);
 
-        // reps
-        const repsCountWrapper = document.createElement('div');
-        repsCountWrapper.classList.add("col", "d-flex", "align-items-center");
+        // reps column
         const repsH3Counter = document.createElement('H3');
         repsH3Counter.innerText = exercise.repsDone.toString();
         repsH3Counter.id = `counter-${uid}`;
@@ -125,11 +114,9 @@ export class ListElement {
         const repsH3Total = document.createElement('H3');
         repsH3Total.innerText = exercise.reps.toString();
 
-        repsCountWrapper.appendChild(repsH3Counter);
-        repsCountWrapper.appendChild(repsH3Divider);
-        repsCountWrapper.appendChild(repsH3Total);
-
-        repsCol.appendChild(repsCountWrapper);
+        repsCol.appendChild(repsH3Counter);
+        repsCol.appendChild(repsH3Divider);
+        repsCol.appendChild(repsH3Total);
 
         this.container.append(container)
     }
